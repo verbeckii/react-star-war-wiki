@@ -67,7 +67,7 @@ export default class RandomPlanet extends Component {
     return (
       <React.Fragment>
                 <img className="planet-image"
-             src={`https://starwars-visualguide.com/assets/img/planets/${id}.jpg`} />
+             src={`https://starwars-visualguide.com/assets/img/planets/${id}.jpg`} alt="planets" />
         <div>
           <h4>{ name }</h4>
           <ul className="list-group list-group-flush">
