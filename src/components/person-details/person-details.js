@@ -3,14 +3,14 @@ import React, { Component } from 'react';
 import './person-details.css';
 
 import SwapiService from '../../services/swapi-services';
+import ErrorButton from '../error-button/error-button';
 
-export default class PersonDetails extends Component {
+export default class PersonDetails extends React.Component {
 
   swapiService = new SwapiService();
 
   state = {
-    person: null,
-    loading: false
+    person: null
   };
 
   componentDidMount() {
@@ -28,48 +28,50 @@ export default class PersonDetails extends Component {
     if (!personId) {
       return;
     }
+
     this.swapiService
-        .getPerson(personId)
-        .then((person) => {
-          this.setState({ 
-            person,
-            loading: true
-          });
-        })
+      .getPerson(personId)
+      .then((person) => {
+        this.setState({ person });
+      });
   }
 
   render() {
 
-    if (!this.state.person) {
-      return <span>Select a person from a list</span>
+    const { person } = this.state;
+    if (!person) {
+      return <span>Select a person from a list</span>;
     }
 
     const { id, name, gender,
-            birthYear, eyeColor} = this.state.person;
-
+              birthYear, eyeColor } = person;
 
     return (
       <div className="person-details card">
         <img className="person-image"
-          src={`https://starwars-visualguide.com/assets/img/characters/${id}.jpg`} alt="character" />
+          src={`https://starwars-visualguide.com/assets/img/characters/${id}.jpg`}
+          alt="character"/>
+
         <div className="card-body">
           <h4>{name}</h4>
           <ul className="list-group list-group-flush">
             <li className="list-group-item">
-              <span className="term">{gender}</span>
-              <span>male</span>
+              <span className="term">Gender</span>
+              <span>{gender}</span>
             </li>
             <li className="list-group-item">
-              <span className="term">{birthYear}</span>
-              <span>43</span>
+              <span className="term">Birth Year</span>
+              <span>{birthYear}</span>
             </li>
             <li className="list-group-item">
-              <span className="term">{eyeColor}</span>
-              <span>red</span>
+              <span className="term">Eye Color</span>
+              <span>{eyeColor}</span>
             </li>
           </ul>
+          <ErrorButton />
         </div>
       </div>
     )
   }
 }
+
